@@ -1,9 +1,21 @@
 <template>
-  <Home />
+  <Home :pageNo="pageNo" />
+  <Paginator v-model="pageNo" />
 </template>
 
-<script setup>
+<script>
 import Home from './components/Home.vue';
+import Paginator from './components/Paginator.vue';
+
+export default {
+  data: () => ({
+    pageNo: 1
+  }),
+  components: {
+    Home,
+    Paginator
+  }
+}
 </script>
 
 <style>

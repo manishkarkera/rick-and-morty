@@ -8,15 +8,30 @@
 <script>
 export default {
   name: "Home",
+  props: {
+    pageNo: {
+      type: Number
+    }
+  },
   data: () => ({
-    pageNo: 1,
     msg: "Lets goooo!!",
-    characters: []
+    characters: [],
   }),
+  methods: {
+    async load() {
+      this.characters = await fetch(
+        `https://rickandmortyapi.com/api/character/?page=${this.pageNo}`
+      ).then(response => response.json())
+        .then(({ results }) => this.characters = results)
+    }
+  },
   mounted() {
-    fetch(`https://rickandmortyapi.com/api/character/?page=${this.pageNo}`)
-      .then(response => response.json())
-      .then(({ results }) => this.characters = results )
+    this.load();
+  },
+  watch: {
+    pageNo() {
+      this.load();
+    }
   }
 }
 </script>
