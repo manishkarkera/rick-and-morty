@@ -1,6 +1,6 @@
 <template>
-  <button type="button" name="button" @click="actionPrevPage">Previous</button>
-  <button type="button" name="button" @click="actionNextPage">Next</button>
+  <button type="button" @click="actionPrevPage">Previous</button>
+  <button type="button" @click="actionNextPage">Next</button>
 </template>
 
 <script>
