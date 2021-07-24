@@ -1,11 +1,26 @@
 <template>
   <div id="listContainer">
-    <h2>{{ msg }}</h2>
-    <template v-for="character in characters" :key="character.id">
+    <template v-for="character in apiResponse.results" :key="character.id">
       <div @click="characterClick(character.id)">
         {{ character.name }}
       </div>
     </template>
+  </div>
+  <div id="footer">
+    <button
+      type="button"
+      v-if="!!prevPageUrl"
+      @click="load(prevPageUrl)"
+    >
+      Previous
+    </button>
+    <button
+      type="button"
+      v-if="!!nextPageUrl"
+      @click="load(nextPageUrl)"
+    >
+      Next
+    </button>
   </div>
   <character-details
     v-if="showCharacterDetails"
@@ -22,30 +37,33 @@ export default {
   components: {
     CharacterDetails
   },
-  props: {
-    pageNo: {
-      type: Number
-    }
-  },
   data: () => ({
-    msg: "Character List",
-    characters: [],
+    apiResponse: {},
     showCharacterDetails: false,
     characterIdInFocus: 0
   }),
   computed: {
     characterObj() {
-      return this.characters.filter(
+      return this.apiResponse.results.filter(
         ({ id }) => id == this.characterIdInFocus
       )[0];
+    },
+    nextPageUrl() {
+      return this.apiResponse &&
+        this.apiResponse.info &&
+        this.apiResponse.info.next
+    },
+    prevPageUrl(){
+      return this.apiResponse &&
+        this.apiResponse.info &&
+        this.apiResponse.info.prev
     }
   },
   methods: {
-    async load() {
-      this.characters = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${this.pageNo}`
-      ).then(response => response.json())
-        .then(({ results }) => this.characters = results)
+    async load(url) {
+      this.characters = await fetch(url)
+        .then(response => response.json())
+        .then(response => this.apiResponse = response)
     },
     characterClick(id) {
       this.characterIdInFocus = id;
@@ -53,12 +71,7 @@ export default {
     }
   },
   mounted() {
-    this.load();
-  },
-  watch: {
-    pageNo() {
-      this.load();
-    }
+    this.load('https://rickandmortyapi.com/api/character/');
   }
 }
 </script>
