@@ -14,7 +14,7 @@
         @click="load(prevPageUrl)"
       >
         Prev page
-        &#171;
+        <span>&#171;&nbsp;</span>
       </div>
       <div class="pagePosition">
         {{ pagePosition }}
@@ -23,7 +23,7 @@
         v-if="!!nextPageUrl"
         @click="load(nextPageUrl)"
       >
-        &#187;
+      <span>&#187;&nbsp;</span>
         Next page
       </div>
     </div>
@@ -151,6 +151,9 @@ export default {
       padding: 0px 15px;
       display: flex;
       align-items: center;
+      span{
+        font-size: 30px;
+      }
       &:hover{
         background-color: black;
         cursor: pointer;
