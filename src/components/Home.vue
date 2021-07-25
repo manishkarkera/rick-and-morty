@@ -9,20 +9,23 @@
       </template>
     </div>
     <div id="footer">
-      <button
-        type="button"
+      <div class="prevPage"
         v-if="!!prevPageUrl"
         @click="load(prevPageUrl)"
       >
-        Previous
-      </button>
-      <button
-        type="button"
+        Prev page
+        &#171;
+      </div>
+      <div class="pagePosition">
+        {{ pagePosition }}
+      </div>
+      <div class="nextPage"
         v-if="!!nextPageUrl"
         @click="load(nextPageUrl)"
       >
-        Next
-      </button>
+        &#187;
+        Next page
+      </div>
     </div>
     <character-details
     v-if="showCharacterDetails"
@@ -71,6 +74,11 @@ export default {
           ({ name }) =>
             name.toLowerCase().includes(this.searchTerm.trim().toLowerCase())
         )
+    },
+    pagePosition() {
+      return this.apiResponse &&
+        this.apiResponse.info &&
+        `${parseInt(this.apiResponse.info.next.split("=")[1]) - 1} of ${this.apiResponse.info.pages}`;
     }
   },
   methods: {
@@ -99,10 +107,11 @@ export default {
     left: 0;
   }
   body{
-    background-image: url("../../public/r&m.jpg");
+    background-image: url("r&m.jpg");
     height: 100vh;
   }
   #listContainer{
+    padding: 10px 30px;
     background: #1c1c1c;
     color: #dbdbdb;
     margin-top: 15vh;
@@ -120,6 +129,32 @@ export default {
         &::before{
           content: "\1F449 \00A0";
         }
+      }
+    }
+  }
+  #footer{
+    color: white;
+    display: flex;
+    justify-content: center;
+    background-color: #0d0d0d;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 7vh;
+    align-items: center;
+    .pagePosition{
+      padding: 10px;
+    }
+    .prevPage,
+    .nextPage{
+      height: 100%;
+      padding: 0px 15px;
+      display: flex;
+      align-items: center;
+      &:hover{
+        background-color: black;
+        cursor: pointer;
+        transition: 0.3s;
       }
     }
   }
