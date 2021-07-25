@@ -136,4 +136,13 @@ export default {
     height: 0;
   }
 
+  .episodeBody{
+    ul{
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      height: 20vh;
+    }
+  }
+
 </style>
