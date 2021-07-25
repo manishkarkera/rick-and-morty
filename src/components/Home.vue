@@ -1,6 +1,7 @@
 <template>
+  <header-bar v-model="searchTerm"/>
   <div id="listContainer">
-    <template v-for="character in apiResponse.results" :key="character.id">
+    <template v-for="character in filteredCharacters" :key="character.id">
       <div @click="characterClick(character.id)">
         {{ character.name }}
       </div>
@@ -30,17 +31,20 @@
 </template>
 
 <script>
+import HeaderBar from "./Header.vue";
 import CharacterDetails from "./CharacterDetails.vue";
 
 export default {
   name: "Home",
   components: {
+    HeaderBar,
     CharacterDetails
   },
   data: () => ({
     apiResponse: {},
     showCharacterDetails: false,
-    characterIdInFocus: 0
+    characterIdInFocus: 0,
+    searchTerm: ""
   }),
   computed: {
     characterObj() {
@@ -57,6 +61,14 @@ export default {
       return this.apiResponse &&
         this.apiResponse.info &&
         this.apiResponse.info.prev
+    },
+    filteredCharacters(){
+      return this.apiResponse &&
+        this.apiResponse.results &&
+        this.apiResponse.results.filter(
+          ({ name }) =>
+            name.toLowerCase().includes(this.searchTerm.trim().toLowerCase())
+        )
     }
   },
   methods: {
