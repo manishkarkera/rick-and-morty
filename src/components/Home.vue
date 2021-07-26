@@ -2,6 +2,9 @@
   <div class="backgroundFilm">
     <header-bar v-model="searchTerm"/>
     <div id="listContainer">
+      <template v-if="!!filteredCharacters && !filteredCharacters.length">
+        <p>No character named &quot;<strong>{{ searchTerm }}</strong>&quot;</p>
+      </template>
       <template v-for="character in filteredCharacters" :key="character.id">
         <div @click="characterClick(character.id)">
           {{ character.name }}
