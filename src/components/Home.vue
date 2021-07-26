@@ -27,11 +27,13 @@
         Next page
       </div>
     </div>
-    <character-details
-    v-if="showCharacterDetails"
-    @close="showCharacterDetails = false"
-    :characterObj="characterObj"
-    />
+    <transition name="popup">
+      <character-details
+      v-if="showCharacterDetails"
+      @close="showCharacterDetails = false"
+      :characterObj="characterObj"
+      />
+    </transition>
   </div>
 </template>
 
@@ -99,10 +101,19 @@ export default {
 </script>
 
 <style lang="scss">
+.popup-enter-active,
+.popup-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.popup-enter-from,
+.popup-leave-to {
+  opacity: 0;
+}
   .backgroundFilm {
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.7);
     position: absolute;
     left: 0;
   }
@@ -117,6 +128,9 @@ export default {
     margin-top: 15vh;
     width: 20%;
     margin-left: 40%;
+    border: 3px #6f6f8e solid;
+    border-radius: 9px;
+    box-shadow: 5px 5px #39393980;
     div {
       font-weight: bold;
       padding: 6px;
@@ -126,6 +140,7 @@ export default {
         transition: 0.2s;
         background-color: #111;
         padding: 6px 12px;
+        border-radius: 5px;
         &::before{
           content: "\1F449 \00A0";
         }
