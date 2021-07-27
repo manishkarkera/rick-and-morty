@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img src="favicon.ico" alt="Rick's face" style="height: 100%">
+    <img src="../../public/favicon.ico" alt="Rick's face" style="height: 100%">
     <h2>Characters database</h2>
     <div class="searchBar">
       <input
