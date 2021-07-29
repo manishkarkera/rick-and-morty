@@ -121,7 +121,7 @@ export default {
     left: 0;
   }
   body{
-    background-image: url("r&m.jpg");
+    background-image: url("/r&m.jpg");
     height: 100vh;
   }
   #listContainer{
